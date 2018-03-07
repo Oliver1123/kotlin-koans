@@ -8,6 +8,10 @@ data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int) : Comparab
                 else -> dayOfMonth - other.dayOfMonth
             }
 }
+operator fun MyDate.rangeTo(other: MyDate): DateRange = when {
+    this < other -> DateRange(this, other)
+    else -> DateRange(other, this)
+}
 
 enum class TimeInterval {
     DAY,
