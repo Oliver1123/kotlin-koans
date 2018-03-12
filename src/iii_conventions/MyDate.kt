@@ -8,10 +8,7 @@ data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int) : Comparab
                 else -> dayOfMonth - other.dayOfMonth
             }
 }
-operator fun MyDate.rangeTo(other: MyDate): DateRange = when {
-    this < other -> DateRange(this, other)
-    else -> DateRange(other, this)
-}
+operator fun MyDate.rangeTo(other: MyDate): DateRange = DateRange(this, other)
 
 enum class TimeInterval {
     DAY,
@@ -19,7 +16,26 @@ enum class TimeInterval {
     YEAR
 }
 
-class DateRange(val start: MyDate, val endInclusive: MyDate) {
+class DateRange(val start: MyDate, val endInclusive: MyDate) : Iterable<MyDate>{
+
+    override fun iterator(): Iterator<MyDate> {
+        return object : Iterator<MyDate> {
+            var next: MyDate = start
+
+            override fun hasNext(): Boolean {
+                return contains(next)
+            }
+
+            override fun next(): MyDate {
+                val current = next
+                next = next.nextDay()
+                return current
+
+            }
+
+        }
+    }
+
     operator fun contains(d: MyDate): Boolean {
         return start <= d && d <= endInclusive
     }

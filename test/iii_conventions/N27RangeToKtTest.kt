@@ -22,4 +22,12 @@ class N27RangeToKtTest {
     @Test fun testAfter() {
         doTest(MyDate(2015, 3, 22), MyDate(2014, 1, 1), MyDate(2015, 1, 1), shouldBeInRange = false)
     }
+
+    @Test fun emptyRangeCheckStart() {
+        doTest(MyDate(2015, 1, 1), MyDate(2015, 1, 1), MyDate(2014, 1, 1), shouldBeInRange = false)
+    }
+
+    @Test fun emptyRangeCheckEnd() {
+        doTest(MyDate(2014, 1, 1), MyDate(2015, 1, 1), MyDate(2014, 1, 1), shouldBeInRange = false)
+    }
 }
